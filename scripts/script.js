@@ -1,16 +1,20 @@
-var numSquares = prompt("size");
 
-if (isNaN(numSquares) || !numSquares) {
-    alert("type a number");
-} else {
-    createCanvas();
+//update the size of the cavas for user value
+function updateValue(e) {
+    var squares = document.querySelectorAll(".square");
+    squares.forEach(item => item.remove());
+    createCanvas(e.target.value);
+    changeColor(document.querySelector("#colorWell").value);
 }
 
-function createCanvas(){
+//create the canvas
+function createCanvas(numSquares){    
     var pixels = 0;
     var continerSizes = 1200;
+
     //create the size of the squares
     pixels = continerSizes /(numSquares * 2);
+
     //create the container
     var container = document.querySelector(".container");
     container.setAttribute('style',`background-color: #888888; 
@@ -27,21 +31,16 @@ function createCanvas(){
                                 height: ${pixels}px; 
                                 width: ${pixels}px; 
                                 border-style: solid;
-                                border-width: 0.5px; 
+                                border-width: 1px; 
                                 border-color: gray;`);
         div.classList.add('square');
 
         container.appendChild(div);  
     }
+    console.log(numSquares);
 }
 
 //color whel
-
-var defaultColor = "#000000";
-
-changeColor(defaultColor);
-window.addEventListener("load", startup, false);
-
 function startup() {
     var colorWell;
     colorWell = document.querySelector("#colorWell");
@@ -66,6 +65,16 @@ function changeColor (value) {
     });
 }
 
+//canvas size
+var defaultSize = document.querySelector("#canvasSize");
+createCanvas(defaultSize.value);
+defaultSize.addEventListener('change', updateValue);
+
+//inicial color value
+var defaultColor = "#000000"
+changeColor(defaultColor);
+window.addEventListener("load", startup, false);
+
 //picker color 
 var color_picker = document.getElementById("colorWell");
 var color_picker_wrapper = document.getElementById("color-picker-wrapper");
@@ -73,6 +82,7 @@ color_picker.onchange = function() {
 	color_picker_wrapper.style.backgroundColor = color_picker.value;    
 }
 color_picker_wrapper.style.backgroundColor = color_picker.value;
+
 
 
 
